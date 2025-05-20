@@ -26,6 +26,20 @@ nodes:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
     controlPlane: true
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 24Gi
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          minSize: 16Gi
+          maxSize: 32Gi
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "52:54:00:29:ba:98"
