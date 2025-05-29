@@ -33,3 +33,7 @@ tasks:
     preconditions:
       - test -f {{.KUBECONFIG}}
       - which flux
+
+  monitor:
+    desc: Monitor the progress of Kustomizations and Helm Releases
+    cmd: watch "flux get kustomizations -A|grep -v Applied;flux get helmrelease -A|grep -v succeeded"
