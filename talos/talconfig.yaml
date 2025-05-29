@@ -5,10 +5,10 @@ clusterName: kubernetes
 talosVersion: "${talosVersion}"
 kubernetesVersion: "${kubernetesVersion}"
 
-endpoint: https://192.168.20.97:6443
+endpoint: https://192.168.20.48:6443
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
-  - "192.168.20.97"
+  - "192.168.20.48"
 additionalMachineCertSans: *sans
 
 clusterPodNets: ["10.42.0.0/16"]
@@ -19,8 +19,8 @@ cniConfig:
   name: none
 
 nodes:
-  - hostname: "tvt"
-    ipAddress: "192.168.20.96"
+  - hostname: "t1"
+    ipAddress: "192.168.20.49"
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
@@ -42,16 +42,74 @@ nodes:
           type: xfs
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "52:54:00:29:ba:98"
+          hardwareAddr: "52:54:00:8d:48:86"
         dhcp: false
         addresses:
-          - "192.168.20.96/24"
+          - "192.168.20.49/24"
         routes:
           - network: "0.0.0.0/0"
             gateway: "192.168.20.1"
         mtu: 1500
         vip:
-          ip: "192.168.20.97"
+          ip: "192.168.20.48"
+  - hostname: "t2"
+    ipAddress: "192.168.20.50"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
+    controlPlane: true
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          minSize: 16Gi
+          maxSize: 32Gi
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "52:54:00:90:15:41"
+        dhcp: false
+        addresses:
+          - "192.168.20.50/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.20.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.20.48"
+  - hostname: "t3"
+    ipAddress: "192.168.20.51"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
+    controlPlane: true
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          minSize: 16Gi
+          maxSize: 32Gi
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "52:54:00:ba:95:a5"
+        dhcp: false
+        addresses:
+          - "192.168.20.51/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.20.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.20.48"
 
 # Global patches
 patches:
