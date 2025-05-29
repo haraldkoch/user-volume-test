@@ -20,6 +20,9 @@ env:
 
 includes:
   bootstrap: .taskfiles/bootstrap
+  externalsecrets:
+    aliases: ["es"]
+    taskfile: .taskfiles/externalsecrets
   talos: .taskfiles/talos
   template: .taskfiles/template
 
