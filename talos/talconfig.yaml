@@ -59,6 +59,10 @@ nodes:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
     controlPlane: true
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 24Gi
     userVolumes:
       - name: longhorn
         provisioning:
@@ -88,6 +92,10 @@ nodes:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
     controlPlane: true
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 24Gi
     userVolumes:
       - name: longhorn
         provisioning:
@@ -124,4 +132,3 @@ controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
-
