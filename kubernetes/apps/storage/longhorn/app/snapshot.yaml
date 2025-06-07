@@ -2,7 +2,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: longhorn-snapshot
+  name: longhorn-volsync
 allowVolumeExpansion: true
 provisioner: driver.longhorn.io
 parameters:
