@@ -31,7 +31,7 @@ nodes:
         provisioning:
           maxSize: 24Gi
     userVolumes:
-      - name: longhorn
+      - name: extra
         provisioning:
           minSize: 16Gi
           maxSize: 32Gi
@@ -64,7 +64,7 @@ nodes:
         provisioning:
           maxSize: 24Gi
     userVolumes:
-      - name: longhorn
+      - name: extra
         provisioning:
           minSize: 16Gi
           maxSize: 32Gi
@@ -97,7 +97,7 @@ nodes:
         provisioning:
           maxSize: 24Gi
     userVolumes:
-      - name: longhorn
+      - name: extra
         provisioning:
           minSize: 16Gi
           maxSize: 32Gi
