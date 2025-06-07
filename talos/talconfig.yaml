@@ -24,7 +24,7 @@ nodes:
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
+    talosImageURL: factory.talos.dev/installer/2fea969334733055ec6784409b515844816ea2104f06827452d298ce3fd64ac7
     controlPlane: true
     volumes:
       - name: EPHEMERAL
@@ -57,7 +57,7 @@ nodes:
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
+    talosImageURL: factory.talos.dev/installer/2fea969334733055ec6784409b515844816ea2104f06827452d298ce3fd64ac7
     controlPlane: true
     volumes:
       - name: EPHEMERAL
@@ -90,7 +90,7 @@ nodes:
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/8d81b134dc431a91204d9c7fcfed6ca195b74df1e48a4c7d487fc71a503b12ab
+    talosImageURL: factory.talos.dev/installer/2fea969334733055ec6784409b515844816ea2104f06827452d298ce3fd64ac7
     controlPlane: true
     volumes:
       - name: EPHEMERAL
