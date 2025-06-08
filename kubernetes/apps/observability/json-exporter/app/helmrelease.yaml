@@ -59,12 +59,6 @@ spec:
             protocol: TCP
             port: 7979
         type: LoadBalancer
-        externalIPs: ["${EXPORTERS_IPV4}", "${EXPORTERS_IPV6}"]
-        externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
-        ipFamilyPolicy: PreferDualStack
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
     serviceMonitor:
       app:
         serviceName: *app
