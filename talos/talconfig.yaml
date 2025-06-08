@@ -33,8 +33,8 @@ nodes:
     userVolumes:
       - name: extra
         provisioning:
-          minSize: 16Gi
-          maxSize: 32Gi
+          minSize: 32Gi
+          maxSize: 64Gi
           grow: true
           diskSelector:
             match: system_disk
@@ -66,8 +66,8 @@ nodes:
     userVolumes:
       - name: extra
         provisioning:
-          minSize: 16Gi
-          maxSize: 32Gi
+          minSize: 32Gi
+          maxSize: 64Gi
           grow: true
           diskSelector:
             match: system_disk
@@ -99,8 +99,8 @@ nodes:
     userVolumes:
       - name: extra
         provisioning:
-          minSize: 16Gi
-          maxSize: 32Gi
+          minSize: 32Gi
+          maxSize: 64Gi
           grow: true
           diskSelector:
             match: system_disk
