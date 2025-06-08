@@ -45,7 +45,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
+        hosts: ["alertmanager.${SECRET_DOMAIN}"]
         pathType: Prefix
       service:
         annotations:
