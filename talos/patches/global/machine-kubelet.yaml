@@ -3,9 +3,10 @@ machine:
     extraConfig:
       serializeImagePulls: false
     extraMounts:
-      - destination: /var/mnt/extra
+      # longhorn says you can change this default, but you cannot
+      - destination: /var/lib/longhorn
         type: bind
-        source: /var/mnt/extra
+        source: /var/mnt/longhorn
         options: ["bind", "rshared", "rw"]
     nodeIP:
       validSubnets:
