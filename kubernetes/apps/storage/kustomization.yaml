@@ -2,10 +2,12 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
+namespace: storage
 components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-  - ./echo/ks.yaml
-  - ./populator-test/ks.yaml
+  - ./longhorn/ks.yaml
+  - ./openebs/ks.yaml
+  - ./snapshot-controller/ks.yaml
+  - ./volsync/ks.yaml
