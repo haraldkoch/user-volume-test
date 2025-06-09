@@ -24,7 +24,7 @@ nodes:
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/2fea969334733055ec6784409b515844816ea2104f06827452d298ce3fd64ac7
+    talosImageURL: factory.talos.dev/installer/06968ca8f1ec5c61ff3c8aafd241038b9437f915ae38aeeea52abe3e50e037a8
     controlPlane: true
     volumes:
       - name: EPHEMERAL
@@ -33,8 +33,8 @@ nodes:
     userVolumes:
       - name: extra
         provisioning:
-          minSize: 32Gi
-          maxSize: 64Gi
+          minSize: 60Gi
+          maxSize: 128Gi
           grow: true
           diskSelector:
             match: system_disk
@@ -57,7 +57,7 @@ nodes:
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/2fea969334733055ec6784409b515844816ea2104f06827452d298ce3fd64ac7
+    talosImageURL: factory.talos.dev/installer/06968ca8f1ec5c61ff3c8aafd241038b9437f915ae38aeeea52abe3e50e037a8
     controlPlane: true
     volumes:
       - name: EPHEMERAL
@@ -66,8 +66,8 @@ nodes:
     userVolumes:
       - name: extra
         provisioning:
-          minSize: 32Gi
-          maxSize: 64Gi
+          minSize: 60Gi
+          maxSize: 128Gi
           grow: true
           diskSelector:
             match: system_disk
@@ -90,7 +90,7 @@ nodes:
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/2fea969334733055ec6784409b515844816ea2104f06827452d298ce3fd64ac7
+    talosImageURL: factory.talos.dev/installer/06968ca8f1ec5c61ff3c8aafd241038b9437f915ae38aeeea52abe3e50e037a8
     controlPlane: true
     volumes:
       - name: EPHEMERAL
@@ -99,8 +99,8 @@ nodes:
     userVolumes:
       - name: extra
         provisioning:
-          minSize: 32Gi
-          maxSize: 64Gi
+          minSize: 60Gi
+          maxSize: 128Gi
           grow: true
           diskSelector:
             match: system_disk
