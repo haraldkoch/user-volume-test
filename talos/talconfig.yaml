@@ -127,6 +127,37 @@ patches:
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
+  # Configure NFS mount options
+  - |-
+    machine:
+      files:
+        - op: overwrite
+          path: /etc/nfsmount.conf
+          permissions 0o644
+          content: |
+            [ NFSMount_Global_Options ]
+            nfsvers=4.2
+            hard=True
+            nconnect=16
+            noatime=True
+  # Configure udev rules
+  - |-
+    machine:
+      udev:
+        rules:
+          # set owner and group on the zigbee USB device
+          - SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
+  # Enable K8s Talos API Access
+  - |-
+    machine:
+      features:
+        kubernetesTalosAPIAccess:
+          enabled: true
+          allowedRoles:
+            - os:admin
+          allowedKubernetesNamespaces:
+            - actions-runner-system
+            - system-upgrade
 
 # Controller patches
 controlPlane:
