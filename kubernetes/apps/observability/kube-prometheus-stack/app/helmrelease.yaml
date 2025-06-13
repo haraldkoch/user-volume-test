@@ -115,7 +115,7 @@ spec:
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         retention: 14d
-        retentionSize: 50GB
+        retentionSize: 25GB
         externalLabels:
           cluster: network
         additionalAlertManagerConfigs:
@@ -136,7 +136,7 @@ spec:
               storageClassName: longhorn
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 25Gi
     prometheusOperator:
       resources:
         requests:
