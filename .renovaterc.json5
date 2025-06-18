@@ -10,8 +10,7 @@
     ":semanticCommits",
   ],
   dependencyDashboard: true,
-  dependencyDashboardTitle: "Renovate Dashboard 🤖",
-  schedule: ["every weekend"],
+  dependencyDashboardTitle: "Renovate Dashboard 🐟",
   ignorePaths: ["**/*.sops.*"],
   flux: {
     managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/"],
