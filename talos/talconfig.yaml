@@ -158,6 +158,13 @@ patches:
           allowedKubernetesNamespaces:
             - actions-runner-system
             - system-upgrade
+  # Disable talos forwarding kube-dns to Host DNS - we don't need another cache
+  - |-
+    machine:
+      features:
+        hostDNS:
+          enabled: true
+          forwardKubeDNSToHost: false
 
 # Controller patches
 controlPlane:
