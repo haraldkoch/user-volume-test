@@ -41,17 +41,18 @@ nodes:
         filesystem:
           type: xfs
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "52:54:00:8d:48:86"
+      - interface: enp1s0
         dhcp: false
-        addresses:
-          - "192.168.20.49/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "192.168.20.1"
         mtu: 1500
-        vip:
-          ip: "192.168.20.48"
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.49/24"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+            vip:
+              ip: "192.168.20.48"
   - hostname: "t2"
     ipAddress: "192.168.20.50"
     installDisk: "/dev/vda"
@@ -74,17 +75,18 @@ nodes:
         filesystem:
           type: xfs
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "52:54:00:90:15:41"
+      - interface: enp1s0
         dhcp: false
-        addresses:
-          - "192.168.20.50/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "192.168.20.1"
         mtu: 1500
-        vip:
-          ip: "192.168.20.48"
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.50/24"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+            vip:
+              ip: "192.168.20.48"
   - hostname: "t3"
     ipAddress: "192.168.20.51"
     installDisk: "/dev/vda"
@@ -107,17 +109,18 @@ nodes:
         filesystem:
           type: xfs
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "52:54:00:ba:95:a5"
+      - interface: enp1s0
         dhcp: false
-        addresses:
-          - "192.168.20.51/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "192.168.20.1"
         mtu: 1500
-        vip:
-          ip: "192.168.20.48"
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.51/24"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+            vip:
+              ip: "192.168.20.48"
 
 # Global patches
 patches:
