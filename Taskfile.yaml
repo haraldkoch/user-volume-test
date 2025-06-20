@@ -25,6 +25,9 @@ includes:
     taskfile: .taskfiles/externalsecrets
   talos: .taskfiles/talos
   template: .taskfiles/template
+  volsync:
+    aliases: ["vs"]
+    taskfile: .taskfiles/volsync
 
 tasks:
 
