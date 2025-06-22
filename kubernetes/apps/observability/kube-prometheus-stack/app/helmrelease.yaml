@@ -49,7 +49,7 @@ spec:
         pathType: Prefix
       service:
         annotations:
-          lbipam.cilium.io/ips: "192.168.20.55"
+          lbipam.cilium.io/ips: "192.168.23.90"
           external-dns.alpha.kubernetes.io/hostname: "amcluster-uvt.${MAIN_DOMAIN}"
         externalTrafficPolicy: Cluster
         additionalPorts:
