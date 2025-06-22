@@ -118,7 +118,7 @@ spec:
         retention: 14d
         retentionSize: 25GB
         externalLabels:
-          cluster: network
+          cluster: user-volume-test
         additionalAlertManagerConfigs:
           - scheme: http
             static_configs:
@@ -126,6 +126,10 @@ spec:
                   - "amcluster-main.${MAIN_DOMAIN}:9093"
                 labels:
                   server: amcluster-main.${MAIN_DOMAIN}
+              - targets:
+                  - "amcluster-network.${MAIN_DOMAIN}:9093"
+                labels:
+                  server: amcluster-network.${MAIN_DOMAIN}
         resources:
           requests:
             cpu: 100m
