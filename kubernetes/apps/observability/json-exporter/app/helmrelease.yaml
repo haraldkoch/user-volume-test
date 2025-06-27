@@ -53,9 +53,12 @@ spec:
             runAsNonRoot: true
     service:
       app:
-        annotations:
-          lbipam.cilium.io/ips: "192.168.23.101"
         controller: json-exporter
+        annotations:
+          lbipam.cilium.io/ips: "192.168.23.101,fdd5:aa8:9535:23::101"
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
         ports:
           metrics:
             protocol: TCP

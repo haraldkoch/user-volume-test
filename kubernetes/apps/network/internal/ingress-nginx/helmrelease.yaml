@@ -26,8 +26,10 @@ spec:
     controller:
       service:
         annotations:
-          lbipam.cilium.io/ips: "192.168.23.80"
-        externalTrafficPolicy: Cluster
+          lbipam.cilium.io/ips: "192.168.23.80,fdd5:aa8:9535:23::80"
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: internal
         default: true
