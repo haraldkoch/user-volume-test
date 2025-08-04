@@ -49,11 +49,11 @@ spec:
         pathType: Prefix
       service:
         annotations:
-          lbipam.cilium.io/ips: "192.168.23.90,fdd5:aa8:9535:23::90"
+          lbipam.cilium.io/ips: 192.168.23.90
           external-dns.alpha.kubernetes.io/hostname: "amcluster-uvt.${MAIN_DOMAIN}"
         externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
-        ipFamilyPolicy: PreferDualStack
+        ipDualStack:
+          enabled: false
         additionalPorts:
           - name: tcp-mesh
             port: 9094
