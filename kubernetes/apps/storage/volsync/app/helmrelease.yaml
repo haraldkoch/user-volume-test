@@ -29,11 +29,9 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     manageCRDs: true
-    # The stock image is not yet multi-arch
     replicaCount: 2
     metrics:
       disableAuth: true
