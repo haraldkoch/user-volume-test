@@ -17,7 +17,10 @@ spec:
           - name: alertname
             value: InfoInhibitor
             matchType: =
-      - receiver: "null"
+      - receiver: heartbeat
+        groupInterval: 5m
+        groupWait: 0s
+        repeatInterval: 1h
         matchers:
           - name: alertname
             value: Watchdog
@@ -39,6 +42,11 @@ spec:
           matchType: =
   receivers:
     - name: "null"
+    - name: heartbeat
+      webhookConfigs:
+        - urlSecret:
+            name: &secret alertmanager-secret
+            key: ALERTMANAGER_HEARTBEAT_URL
     - name: pushover
       pushoverConfigs:
         - html: true
@@ -70,7 +78,7 @@ spec:
             {{ .CommonLabels.alertname }}
           ttl: 86400s
           token:
-            name: &secret alertmanager-secret
+            name: *secret
             key: ALERTMANAGER_PUSHOVER_TOKEN
           userKey:
             name: *secret
