@@ -43,9 +43,10 @@ spec:
           pluginConfig:
             - name: DefaultEvictor
               args:
-                evictFailedBarePods: true
-                evictLocalStoragePods: true
                 evictSystemCriticalPods: true
+#                podProtections:
+#                  defaultDisabled:
+#                    - SystemCriticalPods
                 nodeFit: true
             - name: RemovePodsViolatingInterPodAntiAffinity
             - name: RemovePodsViolatingNodeAffinity
