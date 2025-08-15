@@ -42,7 +42,7 @@ tasks:
           curl --silent -X POST --data-binary @{{.TALOS_DIR}}/schematic.yaml https://factory.talos.dev/schematics \
             | jq --raw-output '.id'
     requires:
-      vars: [CLUSTER, NODE]
+      vars: [NODE]
     preconditions:
       - op whoami
       - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
@@ -157,8 +157,6 @@ tasks:
     vars:
       NODES:
         sh: kubectl get nodes --output=jsonpath='{.items[*].metadata.name}'
-    requires:
-      vars: [CLUSTER]
     preconditions:
       - talosctl --nodes {{.NODES}} get machineconfig --talosconfig {{.TALOS_DIR}}/talosconfig
       - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
