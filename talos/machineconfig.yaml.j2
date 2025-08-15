@@ -145,7 +145,6 @@ cluster:
   aggregatorCA:
     crt: op://homelab/talos-uvt/CLUSTER_AGGREGATORCA_CRT
     key: op://homelab/talos-uvt/CLUSTER_AGGREGATORCA_KEY
-  allowSchedulingOnControlPlanes: true
   apiServer:
     image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
