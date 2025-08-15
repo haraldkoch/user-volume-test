@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  install:
+    disk: /dev/vda
+  network:
+    hostname: t2
+    interfaces:
+      - interface: enp1s0
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - addresses:
+              - 192.168.20.50/24
+              - fdd5:aa8:9535:20::50/64
+            routes:
+              - network: 0.0.0.0/0
+                gateway: 192.168.20.1
+            vlanId: 20
+            vip:
+              ip: 192.168.20.48
