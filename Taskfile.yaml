@@ -15,6 +15,7 @@ vars:
 
 env:
   KUBECONFIG: '{{.ROOT_DIR}}/kubeconfig'
+  MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
   SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
   TALOSCONFIG: '{{.TALOSCONFIG}}'
 
@@ -31,7 +32,9 @@ includes:
 
 tasks:
 
-  default: task --list
+  default:
+    cmd: task --list
+    silent: true
 
   reconcile:
     desc: Force Flux to pull in changes from your Git repository
@@ -43,3 +46,9 @@ tasks:
   monitor:
     desc: Monitor the progress of Kustomizations and Helm Releases
     cmd: watch "flux get kustomizations -A|grep -v Applied;flux get helmrelease -A|grep -v succeeded"
+
+  # Ref: https://github.com/go-task/task/issues/608
+  noop:
+    internal: true
+    silent: true
+    cmd: noop() { :; }
