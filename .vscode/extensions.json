@@ -1,7 +1,9 @@
 {
   "recommendations": [
+    "bennycode.sort-everything",
     "blueglassblock.better-json5",
     "irongeek.vscode-env",
+    "mitchdenny.ecdc",
     "redhat.vscode-yaml",
     "signageos.signageos-vscode-sops"
   ]
