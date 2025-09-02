@@ -14,23 +14,23 @@ machine:
     - 127.0.0.1
     - 192.168.20.48
   features:
-    rbac: true
-    stableHostname: true
+    apidCheckExtKeyUsage: true
+    diskQuotaSupport: true
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+      resolveMemberNames: true
     {% if ENV.MACHINE_TYPE == 'controlplane' %}
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
       allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
     {% endif %}
-    apidCheckExtKeyUsage: true
-    diskQuotaSupport: true
     kubePrism:
       enabled: true
       port: 7445
-    hostDNS:
-      enabled: true
-      resolveMemberNames: true
-      forwardKubeDNSToHost: false
+    rbac: true
+    stableHostname: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -57,7 +57,8 @@ machine:
     modules:
       - name: nbd
   kubelet:
-    image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
     extraArgs:
       max-pods: "200"
     extraConfig:
@@ -66,13 +67,12 @@ machine:
       serializeImagePulls: false
     extraMounts:
       - destination: /var/mnt/extra
-        type: bind
-        source: /var/mnt/extra
         options: ["bind", "rshared", "rw"]
-    defaultRuntimeSeccompProfileEnabled: true
+        source: /var/mnt/extra
+        type: bind
+    image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
     nodeIP:
       validSubnets: ["192.168.20.0/24", "fdd5:aa8:9535:20::/108"]
-    disableManifestsDirectory: true
   network:
     nameservers: ["199.85.99.6", "199.85.99.7"]
     disableSearchDomain: true
@@ -106,13 +106,13 @@ machine:
           - https://harbor.kochhaus.dev/v2/registry.k8s.io
         overridePath: true
   sysctls:
-    fs.inotify.max_user_watches: "1048576"     # Watchdog
     fs.inotify.max_user_instances: "8192"      # Watchdog
+    fs.inotify.max_user_watches: "1048576"     # Watchdog
     net.core.rmem_max: "7500000"               # Cloudflared / QUIC
     net.core.wmem_max: "7500000"               # Cloudflared / QUIC
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     user.max_user_namespaces: "11255"          # User Namespaces
-    # vm.nr_hugepages: "1024"                    # PostgreSQL
+    # vm.nr_hugepages: "1024"                  # PostgreSQL
   time:
     disabled: false
     servers: ["199.85.99.3", "199.85.99.11"]
@@ -148,12 +148,12 @@ cluster:
     key: op://homelab/talos-uvt/CLUSTER_AGGREGATORCA_KEY
   apiServer:
     image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
+    certSANs: ["192.168.20.48", "127.0.0.1"]
+    disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: true
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1alpha1=true
-    certSANs: ["192.168.20.48", "127.0.0.1"]
-    disablePodSecurityPolicy: true
   controllerManager:
     image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
@@ -171,7 +171,6 @@ cluster:
   proxy:
     disabled: true
     image: registry.k8s.io/kube-proxy:{{ ENV.KUBERNETES_VERSION }}
-  secretboxEncryptionSecret: op://homelab/talos-uvt/CLUSTER_SECRETBOXENCRYPTIONSECRET
   scheduler:
     image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
@@ -193,6 +192,7 @@ cluster:
 #                  - maxSkew: 1
 #                    topologyKey: kubernetes.io/hostname
 #                    whenUnsatisfiable: ScheduleAnyway
+  secretboxEncryptionSecret: op://homelab/talos-uvt/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-uvt/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
