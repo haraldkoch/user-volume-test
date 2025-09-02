@@ -53,6 +53,35 @@ function apply_namespaces() {
     done
 }
 
+# ConfigMaps to be applied before the helmfile charts are installed
+function apply_configmaps() {
+    log debug "Applying ConfigMaps"
+
+    local -r configmaps=(
+        "${ROOT_DIR}/kubernetes/components/common/cluster-settings.yaml"
+    )
+
+    for configmap in "${configmaps[@]}"; do
+        if [ ! -f "${configmap}" ]; then
+            log warn "File does not exist" file "${configmap}"
+            continue
+        fi
+
+        # Check if the configmap resources are up-to-date
+        if kubectl --namespace flux-system diff --filename "${configmap}" &>/dev/null; then
+            log info "ConfigMap resource is up-to-date" "resource=$(basename "${configmap}" ".yaml")"
+            continue
+        fi
+
+        # Apply configmap resources
+        if kubectl --namespace flux-system apply --server-side --filename "${configmap}" &>/dev/null; then
+            log info "ConfigMap resource applied successfully" "resource=$(basename "${configmap}" ".yaml")"
+        else
+            log error "Failed to apply ConfigMap resource" "resource=$(basename "${configmap}" ".yaml")"
+        fi
+    done
+}
+
 # SOPS secrets to be applied before the helmfile charts are installed
 function apply_sops_secrets() {
     log debug "Applying secrets"
@@ -91,6 +120,8 @@ function apply_crds() {
     local -r crds=(
         # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
         https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.85.0/stripped-down-crds.yaml
+        # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+        https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml
         # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
         https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.19.0/config/crd/standard/dnsendpoints.externaldns.k8s.io.yaml
     )
@@ -126,11 +157,12 @@ function apply_helm_releases() {
 }
 
 function main() {
-    check_cli helmfile kubectl kustomize sops yq
+    check_cli helmfile kubectl kustomize sops
 
     # Apply resources and Helm releases
     wait_for_nodes
     apply_namespaces
+    apply_configmaps
     apply_sops_secrets
     apply_crds
     apply_helm_releases
