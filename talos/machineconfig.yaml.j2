@@ -55,7 +55,7 @@ machine:
   install:
     extraKernelArgs:
       - -selinux
-    image: factory.talos.dev/installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.10.6
+    image: factory.talos.dev/installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.11.0
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -69,7 +69,7 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.33.3
+    image: ghcr.io/siderolabs/kubelet:v1.34.0
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
@@ -163,13 +163,13 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
-      runtime-config: admissionregistration.k8s.io/v1alpha1=true
-    image: registry.k8s.io/kube-apiserver:v1.33.3
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
+    image: registry.k8s.io/kube-apiserver:v1.34.0
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
       node-cidr-mask-size-ipv6: "112"
-    image: registry.k8s.io/kube-controller-manager:v1.33.3
+    image: registry.k8s.io/kube-controller-manager:v1.34.0
   coreDNS:
     disabled: true
   discovery:
@@ -208,7 +208,7 @@ cluster:
 #                    whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.33.3
+    image: registry.k8s.io/kube-scheduler:v1.34.0
   secretboxEncryptionSecret: op://homelab/talos-uvt/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-uvt/CLUSTER_SERVICEACCOUNT_KEY
