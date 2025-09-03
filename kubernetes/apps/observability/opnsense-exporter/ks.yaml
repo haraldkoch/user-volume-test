@@ -14,10 +14,6 @@ spec:
       namespace: external-secrets
   interval: 1h
   path: ./kubernetes/apps/observability/opnsense-exporter/app
-  postBuild:
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
