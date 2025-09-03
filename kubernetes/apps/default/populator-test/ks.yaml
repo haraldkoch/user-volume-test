@@ -23,9 +23,6 @@ spec:
       VOLSYNC_CLAIM: populator-test-data
       VOLSYNC_PGID: "65533"
       VOLSYNC_PUID: "65533"
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -34,4 +31,3 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

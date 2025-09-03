@@ -9,5 +9,3 @@ resources:
   - ./bind-dns/ks.yaml
   - ./cloudflare-dns/ks.yaml
   - ./cloudflared/ks.yaml
-  - ./ingress-nginx/ks.yaml
-  - ./nginx-external/ks.yaml

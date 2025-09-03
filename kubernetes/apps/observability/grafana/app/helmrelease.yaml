@@ -175,7 +175,7 @@ spec:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 40
+          revision: 41
           datasource: Prometheus
         smart:
           # renovate: depName="Dashboard for smartctl_exporter"
@@ -229,7 +229,7 @@ spec:
         kubernetes-coredns:
           # renovate: depName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 20
+          revision: 21
           datasource: Prometheus
         kubernetes-global:
           # renovate: depName="Kubernetes / Views / Global"
@@ -244,7 +244,7 @@ spec:
         kubernetes-nodes:
           # renovate: depName="Kubernetes / Views / Nodes"
           gnetId: 15759
-          revision: 35
+          revision: 37
           datasource: Prometheus
         kubernetes-pods:
           # renovate: depName="Kubernetes / Views / Pods"
@@ -306,10 +306,14 @@ spec:
           regex: (pod)
     service:
       ipFamilyPolicy: PreferDualStack
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts: ["grafana.${SECRET_DOMAIN}"]
+    route:
+      main:
+        enabled: true
+        hostnames: ["grafana.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     imageRenderer:
       enabled: true
       image:
