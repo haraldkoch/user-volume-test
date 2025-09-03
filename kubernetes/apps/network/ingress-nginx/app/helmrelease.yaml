@@ -1,4 +1,13 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: ingress-nginx
+spec:
+  interval: 1h
+  url: https://kubernetes.github.io/ingress-nginx
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -13,7 +22,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
-        namespace: flux-system
+        namespace: network
   install:
     remediation:
       retries: -1
@@ -24,9 +33,14 @@ spec:
   values:
     fullnameOverride: internal-ingress-nginx
     controller:
+      annotations:
+        configmap.reloader.stakater.com/reload: internal-ingress-nginx-controller
+      extraEnvs:
+        - name: TZ
+          value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
-          lbipam.cilium.io/ips: "192.168.23.80,fdd5:aa8:9535:23::80"
+          lbipam.cilium.io/ips: "${NGINX_INT_IPV4},${NGINX_INT_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
@@ -40,10 +54,9 @@ spec:
             - key: ingress-class
               operator: In
               values: ["internal"]
+      allowSnippetAnnotations: true
       config:
-        allow-snippet-annotations: true
         annotations-risk-level: Critical
-        block-user-agents: "AdsBot-Google,Amazonbot,anthropic-ai,Applebot-Extended,Bytespider,CCBot,ChatGPT-User,ClaudeBot,Claude-Web,cohere-ai,Diffbot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GPTBot,img2dataset,omgili,omgilibot,peer39_crawler,peer39_crawler/1.0,PerplexityBot,YouBot," # taken from https://github.com/ai-robots-txt/ai.robots.txt
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
@@ -66,17 +79,23 @@ spec:
         proxy-buffer-size: 32k
         proxy-busy-buffers-size: 32k
         ssl-protocols: TLSv1.3 TLSv1.2
+        strict-validate-path-type: "true"
         use-forwarded-headers: "true"
+      enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: "cert-manager/${CLUSTER_DOMAIN/./-}-production-tls"
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
+      terminationGracePeriodSeconds: 120
       resources:
         requests:
           cpu: 100m
+          memory: 250Mi
         limits:
           memory: 500Mi
+    defaultBackend:
+      enabled: false
