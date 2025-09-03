@@ -6,16 +6,11 @@ tasks:
 
   talos:
     desc: Bootstrap Talos
-    cmds:
-      - until talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.RANDOM_CONTROLLER}} bootstrap; do sleep 5; done
-      - talosctl kubeconfig --nodes {{.RANDOM_CONTROLLER}} --talosconfig {{.TALOS_DIR}}/talosconfig
-    vars:
-      RANDOM_CONTROLLER:
-        sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info --output yaml | yq --exit-status '.endpoints[0]'
+    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh
     preconditions:
-      - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
-      - talosctl --nodes {{.RANDOM_CONTROLLER}} get machineconfig --talosconfig {{.TALOS_DIR}}/talosconfig
-      - which yq talosctl
+      - find --version | grep -q GNU
+      - test -f {{.SCRIPTS_DIR}}/bootstrap-talos.sh
+      - which gum op talosctl yq
 
   apps:
     desc: Bootstrap apps into the Talos cluster
