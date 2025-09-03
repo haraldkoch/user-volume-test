@@ -55,7 +55,7 @@ spec:
       app:
         controller: json-exporter
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: exporters.${SECRET_DOMAIN}
           lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
           lbipam.cilium.io/sharing-cross-namespace: default,observability
           lbipam.cilium.io/sharing-key: exporters
