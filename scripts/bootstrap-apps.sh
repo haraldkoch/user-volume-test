@@ -58,7 +58,7 @@ function apply_configmaps() {
     log debug "Applying ConfigMaps"
 
     local -r configmaps=(
-        "${ROOT_DIR}/kubernetes/components/common/cluster-settings.yaml"
+        "${ROOT_DIR}/kubernetes/components/common/sops/cluster-settings.yaml"
     )
 
     for configmap in "${configmaps[@]}"; do
@@ -88,8 +88,8 @@ function apply_sops_secrets() {
 
     local -r secrets=(
         "${ROOT_DIR}/bootstrap/github-deploy-key.sops.yaml"
-        "${ROOT_DIR}/kubernetes/components/common/cluster-secrets.sops.yaml"
-        "${ROOT_DIR}/kubernetes/components/common/sops-age.sops.yaml"
+        "${ROOT_DIR}/kubernetes/components/common/sops/cluster-secrets.sops.yaml"
+        "${ROOT_DIR}/kubernetes/components/common/sops/secret.sops.yaml"
     )
 
     for secret in "${secrets[@]}"; do
@@ -117,7 +117,7 @@ function apply_sops_secrets() {
 function apply_crds() {
     log debug "Applying CRDs"
 
-    local -r helmfile_file="${ROOT_DIR}/bootstrap/00-crds.yaml"
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/helmfile.d/00-crds.yaml"
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log error "File does not exist" "file=${helmfile_file}"
@@ -134,7 +134,7 @@ function apply_crds() {
 function apply_helm_releases() {
     log debug "Applying Helm releases with helmfile"
 
-    local -r helmfile_file="${ROOT_DIR}/bootstrap/01-apps.yaml"
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/helmfile.d/01-apps.yaml"
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log error "File does not exist" "file=${helmfile_file}"
