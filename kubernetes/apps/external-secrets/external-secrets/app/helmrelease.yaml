@@ -31,6 +31,8 @@ spec:
     remediation:
       retries: 3
   values:
+    grafanaDashboard:
+      enabled: true
     image:
       repository: ghcr.io/external-secrets/external-secrets
     installCRDs: true
