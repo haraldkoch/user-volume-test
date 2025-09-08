@@ -13,7 +13,7 @@ instance:
   sync:
     kind: GitRepository
     url: https://github.com/haraldkoch/user-volume-test.git
-    ref: refs/heads/main
+    ref: refs/heads/envoy-gateway
     path: kubernetes/flux/cluster
     interval: 1h
   commonMetadata:
