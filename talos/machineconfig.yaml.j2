@@ -53,8 +53,6 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    extraKernelArgs:
-      - -selinux
     image: factory.talos.dev/installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.11.0
     wipe: false
   kubelet:
