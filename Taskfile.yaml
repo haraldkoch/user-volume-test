@@ -24,6 +24,9 @@ includes:
   externalsecrets:
     aliases: ["es"]
     taskfile: .taskfiles/externalsecrets
+  kubernetes:
+    aliases: ["ku"]
+    taskfile: .taskfiles/kubernetes
   talos: .taskfiles/talos
   volsync:
     aliases: ["vs"]

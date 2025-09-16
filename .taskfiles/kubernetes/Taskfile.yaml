@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+tasks:
+  node-shell:
+    desc: Open a shell to a node [NODE=required]
+    interactive: true
+    cmd: kubectl node-shell -n kube-system -x {{.NODE}}
+    requires:
+      vars: [NODE]
+    preconditions:
+      - kubectl get nodes {{.NODE}}
+      - kubectl node-shell --version
+      - which kubectl
+
+  network:
+    desc: Create a netshoot container for a cluster [ns=default]
+    interactive: true
+    cmd: |
+      kubectl run -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
+    vars:
+      ns: '{{.ns | default "default"}}'
+
+  fix-daemonsets:
+    desc: Fix daemonsets that are falsely stuck
+    interactive: true
+    cmds:
+      - kubectl get daemonsets.apps --no-headers -A|awk '{print "kubectl label daemonset -n", $1, $2, "fnord=fnord"}'|sh -x
+      - sleep 5
+      - kubectl get daemonsets.apps --no-headers -A|awk '{print "kubectl label daemonset -n", $1, $2, "fnord-"}'|sh -x
