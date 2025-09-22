@@ -29,3 +29,11 @@ tasks:
       - kubectl get daemonsets.apps --no-headers -A|awk '{print "kubectl label daemonset -n", $1, $2, "fnord=fnord"}'|sh -x
       - sleep 5
       - kubectl get daemonsets.apps --no-headers -A|awk '{print "kubectl label daemonset -n", $1, $2, "fnord-"}'|sh -x
+
+  prune-pods:
+    desc: Prune pods in Failed, Pending, or Succeeded state
+    interactive: true
+    cmd: |
+      for phase in Failed Pending Succeeded; do \
+          kubectl delete pods -A --field-selector status.phase="$phase" --ignore-not-found=true; \
+      done
