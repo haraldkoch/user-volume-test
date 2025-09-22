@@ -143,6 +143,18 @@
       matchDatasources: ["github-releases"],
       addLabels: ["renovate/github-release"],
     },
+    {
+      description: "Override Helmfile Dependency Name",
+      matchDatasources: ["docker"],
+      matchManagers: ["helmfile"],
+      overrideDepName: "{{packageName}}",
+    },
+    {
+      description: "Override Talos Installer Package Name",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/factory\\.talos\\.dev/"],
+      overridePackageName: "ghcr.io/siderolabs/installer",
+    },
   ],
   customManagers: [
     {
