@@ -1,7 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 version: v1alpha1
-persist: true
 machine:
   ca:
     crt: op://homelab/talos-uvt/MACHINE_CA_CRT
@@ -79,7 +78,6 @@ machine:
     disableSearchDomain: true
   nodeLabels:
     topology.kubernetes.io/region: user-volume-test
-    node.kubernetes.io/exclude-from-external-load-balancers: ""
     node.longhorn.io/create-default-disk: "true"
   registries:
     mirrors:
@@ -114,7 +112,6 @@ machine:
     net.core.wmem_max: "7500000"               # Cloudflared / QUIC
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     user.max_user_namespaces: "11255"          # User Namespaces
-    # vm.nr_hugepages: "1024"                  # PostgreSQL
   time:
     disabled: false
     servers:
@@ -170,12 +167,6 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.34.0
   coreDNS:
     disabled: true
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service: {}
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24
@@ -186,6 +177,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
+    image: registry.k8s.io/kube-proxy:v1.34.1
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -196,14 +188,14 @@ cluster:
             score:
               disabled:
                 - name: ImageLocality
-#          pluginConfig:
-#            - name: PodTopologySpread
-#              args:
-#                defaultingType: List
-#                defaultConstraints:
-#                  - maxSkew: 1
-#                    topologyKey: kubernetes.io/hostname
-#                    whenUnsatisfiable: ScheduleAnyway
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
     image: registry.k8s.io/kube-scheduler:v1.34.0
