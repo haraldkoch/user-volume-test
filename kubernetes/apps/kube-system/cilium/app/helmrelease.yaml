@@ -61,6 +61,11 @@ spec:
       xffNumTrustedHops: 1
     hubble:
       enabled: false
+    k8s:
+      apiServerURLs: >-
+        https://192.168.20.49:6443
+        https://192.168.20.50:6443
+        https://192.168.20.51:6443
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.42.0.0/16
