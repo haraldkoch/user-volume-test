@@ -6,7 +6,9 @@ namespace: observability
 components:
   - ../../components/common
 resources:
+  - ./fluent-bit/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./opnsense-exporter/ks.yaml
+  - ./victoria-logs/ks.yaml
