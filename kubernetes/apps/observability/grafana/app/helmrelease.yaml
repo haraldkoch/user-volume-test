@@ -292,7 +292,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     imageRenderer:
       enabled: true
       image:

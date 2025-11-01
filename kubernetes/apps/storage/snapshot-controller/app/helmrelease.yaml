@@ -9,11 +9,6 @@ spec:
     kind: OCIRepository
     name: snapshot-controller
   interval: 1h
-  upgrade:
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      retries: 3
   values:
     controller:
       serviceMonitor:
