@@ -7,6 +7,14 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/network/cloudflared/app
+  postBuild:
+    substituteFrom:
+      - name: cloudflare-tunnel-id-secret
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
