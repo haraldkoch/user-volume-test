@@ -7,6 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/network/cloudflared/app
+  # this doesn't work - the patch in flux/cluster/ks.yaml overrides it
   postBuild:
     substituteFrom:
       - name: cloudflare-tunnel-id-secret
