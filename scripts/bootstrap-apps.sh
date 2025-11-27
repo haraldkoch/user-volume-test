@@ -113,6 +113,23 @@ function apply_sops_secrets() {
     done
 }
 
+# Resources to be created early
+function apply_resources() {
+    log debug "Applying Resources"
+
+    local -r resources_file="${ROOT_DIR}/bootstrap/resources.yaml.j2"
+
+    if [[ ! -f "${resources_file}" ]]; then
+        log error "File does not exist" "file=${resources_file}"
+    fi
+
+    if !  minijinja-cli ${ROOT_DIR}/bootstrap/resources.yaml.j2 | op inject | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - ; then
+        log error "Failed to apply Resources"
+    fi
+
+    log info "Resources applied successfully"
+}
+
 # CRDs to be applied before the helmfile charts are installed
 function apply_crds() {
     log debug "Applying CRDs"
@@ -153,6 +170,7 @@ function main() {
     # Apply resources and Helm releases
     wait_for_nodes
     apply_namespaces
+    apply_resources
     apply_configmaps
     apply_sops_secrets
     apply_crds
