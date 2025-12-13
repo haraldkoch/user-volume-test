@@ -23,6 +23,10 @@ machine:
                 gateway: 192.168.20.1
             dhcp: false
             vlanId: 20
+          - # IOT
+            dhcp: false
+            mtu: 1500
+            vlanId: 30
   type: controlplane
 ---
 apiVersion: v1alpha1
