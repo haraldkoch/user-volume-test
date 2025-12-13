@@ -6,7 +6,12 @@ machine:
   network:
     hostname: t1
     interfaces:
-      - interface: enp1s0
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - driver: virtio_net
+              hardwareAddr: 52:54:00:*
+          mode: active-backup
         dhcp: false
         mtu: 1500
         vlans:
