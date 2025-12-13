@@ -10,4 +10,5 @@ components:
 resources:
   - ./namespace.yaml
   - ./echo/ks.yaml
+  - ./netshoot-iot/ks.yaml
   - ./populator-test/ks.yaml
