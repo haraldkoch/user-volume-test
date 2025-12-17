@@ -10,12 +10,12 @@ spec:
     name: multus
   interval: 1h
   values:
+    cni:
+      binPath: /opt/cni/bin
+      netPath: /etc/cni/net.d
     multus:
       resources:
         requests:
           cpu: 10m
         limits:
-          memory: 32Mi
-    cni:
-      netPath: /etc/cni/net.d
-      binPath: /opt/cni/bin
+          memory: 512Mi
