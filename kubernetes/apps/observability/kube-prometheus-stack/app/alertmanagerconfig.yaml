@@ -6,6 +6,12 @@ metadata:
   name: alertmanager
 spec:
   route:
+    groupBy:
+      - alertname
+      - cluster
+      - job
+    groupInterval: 10m
+    groupWait: 1m
     receiver: pushover
     repeatInterval: 12h
     routes:
@@ -27,13 +33,6 @@ spec:
           - name: severity
             value: critical
             matchType: =
-    groupBy:
-      - alertname
-      - cluster
-      - job
-    groupInterval: 10m
-    groupWait: 1m
-
   inhibitRules:
     - equal:
         - alertname
@@ -46,13 +45,12 @@ spec:
         - name: severity
           value: warning
           matchType: =
-
   receivers:
     - name: blackhole
     - name: heartbeat
       webhookConfigs:
         - urlSecret:
-            name: alertmanager-secret
+            name: &secret alertmanager-secret
             key: ALERTMANAGER_HEARTBEAT_URL
     - name: pushover
       pushoverConfigs:
@@ -81,12 +79,13 @@ spec:
           sendResolved: true
           sound: gamelan
           title: >-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
+            {{ .CommonLabels.alertname }}
           ttl: 86400s
           token:
-            name: alertmanager-secret
+            name: *secret
             key: ALERTMANAGER_PUSHOVER_TOKEN
           userKey:
-            name: alertmanager-secret
+            name: *secret
             key: PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager
