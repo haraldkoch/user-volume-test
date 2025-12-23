@@ -8,7 +8,8 @@ tasks:
     interactive: true
     cmd: kubectl node-shell -n kube-system -x {{.NODE}}
     requires:
-      vars: [NODE]
+      vars:
+        - NODE
     preconditions:
       - kubectl get nodes {{.NODE}}
       - kubectl node-shell --version
@@ -37,3 +38,15 @@ tasks:
       for phase in Failed Pending Succeeded; do \
           kubectl delete pods -A --field-selector status.phase="$phase" --ignore-not-found=true; \
       done
+
+  # https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller/deploying-runner-scale-sets-with-actions-runner-controller#upgrading-arc
+  upgrade-arc:
+    desc: Upgrade the ARC
+    cmds:
+      - helm -n actions-runner-system uninstall home-ops-runner
+      - helm -n actions-runner-system uninstall actions-runner-controller
+      - sleep 5
+      - flux -n actions-runner-system reconcile hr actions-runner-controller
+      - flux -n actions-runner-system reconcile hr home-ops-runner
+    preconditions:
+      - which flux helm
