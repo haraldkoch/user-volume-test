@@ -2,6 +2,7 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
     "github>haraldkoch/renovate-config",
+    "github>haraldkoch/user-volume-test//.renovate/allowedVersions.json5",
     "github>haraldkoch/user-volume-test//.renovate/autoMerge.json5",
     "github>haraldkoch/user-volume-test//.renovate/changelogs.json5",
     "github>haraldkoch/user-volume-test//.renovate/customManagers.json5",

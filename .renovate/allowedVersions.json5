@@ -1,0 +1,10 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      matchDatasources: ["github-releases"],
+      matchPackageNames: ["/aqua:helm/helm/"],
+      allowedVersions: "<=3"
+    },
+  ]
+}
