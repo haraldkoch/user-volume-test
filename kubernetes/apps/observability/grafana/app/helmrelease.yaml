@@ -140,12 +140,15 @@ spec:
           revision: 6
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        envoy:
-           # renovate: depName="Envoy Proxy Monitoring gRPC"
-           gnetId: 23239
-           revision: 1
-           datasource:
-             - { name: DS_AFRANET_PROMETHEUS, value: Prometheus }
+        envoy-overview:
+          datasource: Prometheus
+          url: https://grafana.com/api/dashboards/24459/revisions/1/download
+        envoy-upstream:
+          datasource: Prometheus
+          url: https://grafana.com/api/dashboards/24457/revisions/1/download
+        envoy-downstream:
+          datasource: Prometheus
+          url: https://grafana.com/api/dashboards/24458/revisions/1/download
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
