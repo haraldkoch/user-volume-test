@@ -153,3 +153,10 @@ tasks:
     preconditions:
       - test -f {{.TALOS_SCHEMATIC_FILE}}
       - which curl jq
+
+  kick-tuppr:
+    desc: Kick Tuppr to force an upgrade
+    cmd: kubectl annotate talosupgrade talos tuppr.home-operations.com/reset="$(date)"
+    preconditions:
+      - which kubectl
+      - kubectl get talosupgrade talos
