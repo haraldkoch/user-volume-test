@@ -7,9 +7,15 @@ metadata:
 spec:
   secretName: wildcard-tls
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-production-shortlived
     kind: ClusterIssuer
-  commonName: ${SECRET_DOMAIN}
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always
+  duration: 160h
+  usages:
+    - digital signature
   dnsNames:
     - ${SECRET_DOMAIN}
     - "*.${SECRET_DOMAIN}"
