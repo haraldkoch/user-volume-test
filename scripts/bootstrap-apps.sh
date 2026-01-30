@@ -139,7 +139,7 @@ function apply_crds() {
         log error "File does not exist" "file=${helmfile_file}"
     fi
 
-    if ! helmfile --file "${helmfile_file}" template -q | kubectl apply --server-side -f -; then
+    if ! helmfile --file "${helmfile_file}" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side -f -; then
         log error "Failed to apply CRDs"
     fi
 
