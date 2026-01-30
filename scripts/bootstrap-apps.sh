@@ -43,8 +43,8 @@ function apply_namespaces() {
         fi
 
         # Apply the namespace resources
-        if kubectl create namespace "${namespace}" --dry-run=client --output=yaml \
-            | kubectl apply --server-side --filename - &>/dev/null;
+        if kustomize build ${app} | yq ea -e 'select(.kind == "Namespace")' \
+            | kubectl apply --server-side --field-manager bootstrap --force-conflicts --filename - &>/dev/null;
         then
             log info "Namespace resource applied" "resource=${namespace}"
         else
@@ -139,7 +139,7 @@ function apply_crds() {
         log error "File does not exist" "file=${helmfile_file}"
     fi
 
-    if ! helmfile --file "${helmfile_file}" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side -f -; then
+    if ! helmfile --file "${helmfile_file}" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
         log error "Failed to apply CRDs"
     fi
 
