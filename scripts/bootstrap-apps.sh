@@ -88,6 +88,7 @@ function apply_sops_secrets() {
 
     local -r secrets=(
         "${ROOT_DIR}/bootstrap/github-deploy-key.sops.yaml"
+        "${ROOT_DIR}/bootstrap/age-key.sops.yaml"
         "${ROOT_DIR}/kubernetes/components/common/vars/cluster-secrets.sops.yaml"
     )
 
