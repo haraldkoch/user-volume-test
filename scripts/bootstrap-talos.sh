@@ -84,8 +84,12 @@ function fetch_kubeconfig() {
         log fatal "No Talos controller found"
     fi
 
-    if ! talosctl kubeconfig --nodes "${controller}" --force kubernetes/ &>/dev/null; then
+    if ! talosctl kubeconfig --nodes "${controller}" --force-context-name user-volume-test --force kubernetes/ &>/dev/null; then
         log fatal "Failed to fetch kubeconfig"
+    fi
+
+    if ! kubectl config set-cluster user-volume-test --server "https://${controller}:6443" ; then
+        log fatal "Failed to set kubectl cluster server address"
     fi
 
     log info "Kubeconfig fetched successfully"
