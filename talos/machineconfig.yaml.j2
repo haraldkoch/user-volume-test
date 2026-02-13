@@ -53,7 +53,7 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    image: factory.talos.dev/metal-installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.12.4
+    image: factory.talos.dev/metal-installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.11.6
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -67,7 +67,7 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.35.0
+    image: ghcr.io/siderolabs/kubelet:v1.34.3
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
@@ -182,12 +182,12 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.35.0
+    image: registry.k8s.io/kube-apiserver:v1.34.3
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
       node-cidr-mask-size-ipv6: "112"
-    image: registry.k8s.io/kube-controller-manager:v1.35.0
+    image: registry.k8s.io/kube-controller-manager:v1.34.3
   coreDNS:
     disabled: true
   etcd:
@@ -200,7 +200,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.35.0
+    image: registry.k8s.io/kube-proxy:v1.34.3
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -221,7 +221,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.35.0
+    image: registry.k8s.io/kube-scheduler:v1.34.3
   secretboxEncryptionSecret: op://homelab/talos-uvt/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-uvt/CLUSTER_SERVICEACCOUNT_KEY
@@ -249,10 +249,10 @@ apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
----
-# attempt to disable the broken Talos OOM "feature"
-apiVersion: v1alpha1
-kind: OOMConfig
-triggerExpression: "false"
-cgroupRankingExpression: "0.0"
-sampleInterval: "5s"
+# ---
+# # attempt to disable the broken Talos OOM "feature"
+# apiVersion: v1alpha1
+# kind: OOMConfig
+# triggerExpression: "false"
+# cgroupRankingExpression: "0.0"
+# sampleInterval: "5s"
