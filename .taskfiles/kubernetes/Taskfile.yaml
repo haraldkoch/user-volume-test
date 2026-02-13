@@ -3,6 +3,55 @@
 version: '3'
 
 tasks:
+
+  browse-pvc:
+    desc: Browse PersistentVolumeClaims
+    summary: |
+      Args:
+        ns: Namespace to browse PersistentVolumeClaims in (default: default)
+        claim: PersistentVolumeClaim to browse (required)
+    interactive: true
+    cmd: |
+      kubectl run -n {{.ns}} debug-{{.claim}} -i --tty --rm --image=null --privileged --labels "app=fnord" --overrides='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "containers": [
+              {
+                "name": "debug",
+                "image": "ghcr.io/haraldkoch/ubuntu:rolling",
+                "command": ["/bin/bash"],
+                "stdin": true,
+                "stdinOnce": true,
+                "tty": true,
+                "volumeMounts": [
+                  {
+                    "name": "config",
+                    "mountPath": "/config"
+                  }
+                ]
+              }
+            ],
+            "volumes": [
+              {
+                "name": "config",
+                "persistentVolumeClaim": {
+                  "claimName": "{{.claim}}"
+                }
+              }
+            ],
+            "restartPolicy": "Never"
+          }
+        }'
+    vars:
+      ns: '{{.ns | default "default"}}'
+    requires:
+      vars:
+        - "claim"
+    preconditions:
+      - kubectl --namespace {{.ns}} get persistentvolumeclaims {{.claim}}
+      - which kubectl
+
   node-shell:
     desc: Open a shell to a node [NODE=required]
     interactive: true
