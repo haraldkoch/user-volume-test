@@ -1,19 +1,25 @@
 ---
 customization:
   extraKernelArgs:
-    - console=ttyS0,115200n8              # libvirtd/kvm/qemu
-    - -init_on_alloc                      # Less security, faster puter
-    - -init_on_free                       # Less security, faster puter
-    - -selinux                            # Less security, faster puter
-    - apparmor=0                          # Less security, faster puter
-    - init_on_alloc=0                     # Less security, faster puter
-    - init_on_free=0                      # Less security, faster puter
-    - mitigations=off                     # Less security, faster puter
-    - security=none                       # Less security, faster puter
-    - talos.auditd.disabled=1             # Less security, faster puter
+    - console=ttyS0,115200n8 # libvirtd/kvm/qemu
+    - -init_on_alloc # Less security, faster puter
+    - -init_on_free # Less security, faster puter
+    - -selinux # Less security, faster puter
+    - apparmor=0 # Less security, faster puter
+    - init_on_alloc=0 # Less security, faster puter
+    - init_on_free=0 # Less security, faster puter
+    - mitigations=off # Less security, faster puter
+    - security=none # Less security, faster puter
+    - talos.auditd.disabled=1 # Less security, faster puter
 
   systemExtensions:
     officialExtensions:
-      - siderolabs/iscsi-tools            # Longhorn
-      - siderolabs/qemu-guest-agent       # libvirtd/kvm/qemu
-      - siderolabs/util-linux-tools       # Longhorn
+      - siderolabs/iscsi-tools # Longhorn
+      - siderolabs/qemu-guest-agent # libvirtd/kvm/qemu
+      - siderolabs/util-linux-tools # Longhorn
+
+# Your image schematic ID is: d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1
+# Disk Image
+#   https://factory.talos.dev/image/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1/v1.12.1/metal-amd64.iso
+#   https://factory.talos.dev/image/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1/v1.12.4/metal-amd64.raw.zst
+#   https://factory.talos.dev/image/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1/v1.12.4/metal-amd64.qcow2
